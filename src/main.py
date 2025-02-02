@@ -2,18 +2,17 @@ import yt_dlp
 import os
 from datetime import datetime
 
-FFMPEG_PATH = os.path.join('ffmpeg', 'ffmpeg.exe')
-print(FFMPEG_PATH)
-
 url = input("Lütfen video URL'sini girin: ")
 
 if os.name == "nt":
+    FFMPEG_PATH = os.path.join('ffmpeg', 'ffmpeg.exe')
     from winreg import OpenKey, QueryValueEx, HKEY_CURRENT_USER
 
     with OpenKey(HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
         DOWNLOAD_FOLDER = QueryValueEx(
             key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]
 else:  # For *Nix systems
+    FFMPEG_PATH = os.path.join(os.path.dirname(__file__), 'ffmpeg')
     DOWNLOAD_FOLDER = f"{os.getenv('HOME')}/Downloads"
 
 # Get current date
