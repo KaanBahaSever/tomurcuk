@@ -1,5 +1,6 @@
 import yt_dlp
 
+
 def list_and_select_format(url):
     """Lists available formats and lets the user select one to download."""
     ydl_opts = {}
@@ -19,9 +20,14 @@ def list_and_select_format(url):
         download_opts = {
             "format": format_id + "+bestaudio",  # Download selected video and best audio
             "outtmpl": "%(title)s.%(ext)s",  # Save as title.ext
+            'postprocessors': [{
+                'key': 'FFmpegVideoConvertor',
+                'preferedformat': 'mp4'
+            }]
         }
         with yt_dlp.YoutubeDL(download_opts) as ydl:
             ydl.download([url])
+
 
 video_url = "https://www.youtube.com/watch?v=wjQx_dGUke0&ab_channel=QveenHerby"
 list_and_select_format(video_url)
